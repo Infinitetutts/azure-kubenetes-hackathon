@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: fulfill-order-deployment
+  labels:
+    app: fulfill-order
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fulfill-order
+  template:
+    metadata:
+      labels:
+        app: fulfill-order
+    spec:
+      containers:
+      - name: fulfill-order
+        image: shanepeckham/fulfillorderack:v5
+        env:
+         - name: MONGOHOST 
+           value: mongodb://team4:team4@left-hedgehog-mongodb/team4 
+         - name: TEAMNAME 
+           value: team4 
+        volumeMounts:
+          - mountPath: "/orders"
+            name: azure-share
+        ports:
+          - containerPort: 8080
+      volumes:
+      - name: azure-share
+        persistentVolumeClaim:
+          claimName: fillorder
