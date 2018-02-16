@@ -4,7 +4,7 @@ metadata:
   name: fillorder
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: fillorder
   resources:
     requests:
